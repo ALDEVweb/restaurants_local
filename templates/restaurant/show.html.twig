@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restaurant{% endblock %}
+
+{% block body %}
+<div>
+    <h1 class="txt-center mb32">Restaurant</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ restaurant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ restaurant.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ restaurant.cp }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ restaurant.ville }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="flex a-center gap16">
+        <a href="{{ path('app_restaurant_index') }}">back to list</a>
+
+        <a href="{{ path('app_restaurant_edit', {'id': restaurant.id}) }}">edit</a>
+
+        {{ include('restaurant/_delete_form.html.twig') }}
+    </div>
+    <div class="mt32">
+        <div class="mb16 flex gap16">
+            {% if titre == 'historique' %}
+                <a href="{{ path('app_restaurant_show', {'id': restaurant.id}) }}"><button class="back-button pad-button round8 b-none">Retour</button></a>
+            {% else %}
+                <a href="{{ path('app_restaurant_historique', {'id': restaurant.id}) }}"><button class="back-button pad-button round8 b-none">Historique</button></a>
+            {% endif %}
+            
+            <a href="{{ path('app_affectation_new', {'restaurantId': restaurant.id}) }}"><button class="back-button pad-button round8 b-none">Nouvelle affectation</button></a>
+        </div>
+        <h2 class="txt-center mb16">{% if titre == 'historique' %} Historique des collaborateurs {% else %} Collaborateurs affectés {% endif %}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Poste</th>
+                    <th>Date de début</th>
+                    {% if titre == 'historique' %} <th>Date de fin</th> {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for affectation in affectations %}
+                <tr>
+                    <td>{{ affectation.collaborateur.nom }}</td>
+                    <td>{{ affectation.collaborateur.prenom }}</td>
+                    <td>{{ affectation.poste.poste }}</td>
+                    <td>{{ affectation.dateDebut|date('Y-m-d') }}</td>
+                    {% if titre == 'historique' %} <td>{{ affectation.dateFin ? affectation.dateFin|date('Y-m-d') : '-' }}</td> {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}

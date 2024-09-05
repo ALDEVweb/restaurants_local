@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/fraldev-bundle.css') }}">
+        {% block stylesheets %}
+        {% endblock %}
+
+    </head>
+    <body>
+        {% block header %}{% endblock %} 
+
+        <div id="contain_block_body" class="large-12 mt80 flex j-center">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </body>
+</html>

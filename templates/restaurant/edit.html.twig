@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Restaurant{% endblock %}
+
+{% block body %}
+<div>
+    <h1 class="mb32">Edit Restaurant</h1>
+
+    {{ include('restaurant/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="flex gap16 mt16">
+        <a href="{{ path('app_restaurant_index') }}">back to list</a>
+        {{ include('restaurant/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

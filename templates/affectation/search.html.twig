@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affectation index{% endblock %}
+
+{% block header %}
+<div id="header" class="large-12 flex j-between a-center">
+    <div class="logo"><img src="{{ asset('images/logo.png') }}" alt="logo de Wakdo"></div>
+    <nav class="flex j-center gap16">
+        <a href="{{path('app_collaborateur_index')}}"><button class="back-button pad-button b-none round8">Collaborateurs</button></a>
+        <a href="{{path('app_restaurant_index')}}"><button class="back-button pad-button b-none round8">Restaurants</button></a>
+        <a href="{{path('app_fonction_index')}}"><button class="back-button pad-button b-none round8">Fonctions</button></a>
+    </nav>
+    <a href="{{path('app_logout')}}"><button class="back-two pad-button b-none round8">Déconnexion</button></a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="large-12">
+    <div class="flex j-center gap16 mb48">
+        <h1>Liste des affectations</h1>
+        <a href="{{path('app_affectation_index')}}"><button class="back-button pad-button round8 b-none">Retour</button></a>
+    </div>
+
+    <div class="flex j-between large-10 mrlauto">
+        <table class="table large-9">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Poste</th>
+                    <th>Restaurant</th>
+                    <th>Date_debut</th>
+                    <th>Date_fin</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if affectations is empty %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% else %}
+                {% for affectation in affectations %}
+                    <tr>
+                        <td class="txt-center">{{ affectation.collaborateur.prenom }} {{ affectation.collaborateur.nom }}</td>
+                        <td class="txt-center">{{ affectation.poste.poste }}</td>
+                        <td class="txt-center">{% if affectation.restaurant is not null %} {{affectation.restaurant.nom}} {% endif %}</td>
+                        <td class="txt-center">{{ affectation.dateDebut ? affectation.dateDebut|date('Y-m-d') : '' }}</td>
+                        <td class="txt-center">{{ affectation.dateFin ? affectation.dateFin|date('Y-m-d') : '' }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

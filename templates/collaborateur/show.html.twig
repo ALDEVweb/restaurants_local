@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collaborateur{% endblock %}
+
+{% block body %}
+<div>
+    <h1 class="txt-center mb32">Collaborateur</h1>
+
+    <table class="table mb16">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ collaborateur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ collaborateur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ collaborateur.email }}</td>
+            </tr>
+            <tr>
+                <th>Date_embauche</th>
+                <td>{{ collaborateur.dateEmbauche ? collaborateur.dateEmbauche|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Administrateur</th>
+                <td>{{ collaborateur.administrateur ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="flex gap16 mb16 a-center">
+        <a href="{{ path('app_collaborateur_index') }}">back to list</a>
+        <a href="{{ path('app_collaborateur_edit', {'id': collaborateur.id}) }}">edit</a>
+        {{ include('collaborateur/_delete_form.html.twig') }}
+    </div>
+    <a href="{{ path('app_affectation_new', {'collaborateurId': collaborateur.id}) }}"><button class="mt16 mb16 back-button pad-button round8 b-none">Nouvelle affectation</button></a>
+    <div class="mt32">
+        <h2 class="mb16">Affectations en cours</h2>
+        <table class="table mb16">
+            <thead>
+                <tr>
+                    <th>Poste</th>
+                    <th>Restaurant</th>
+                    <th>Date de début</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if affectationsActuelle is empty %}
+                    <tr>
+                        <td>-</td>                
+                        <td>-</td>   
+                        <td>-</td> 
+                    </tr>
+                {% else %}
+                    {% for affectation in affectationsActuelle %}
+                        <tr>
+                            <td>{{ affectation.poste.poste }}</td>                
+                            <td>{{ affectation.restaurant.nom }}</td>   
+                            <td>{{ affectation.dateDebut|date("d/m/Y") }}</td>
+                            <td><a href="{{ path('app_affectation_edit', {'id': affectation.id}) }}">edit</a></td>
+                        </tr>  
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt32">
+        <h2 class="mb16">Affectations passées</h2>
+        <table class="table mb16">
+            <thead>
+                <tr>
+                    <th>Poste</th>
+                    <th>Restaurant</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if affectationsPassees is empty %}
+                    <tr>
+                        <td>-</td>                
+                        <td>-</td>   
+                        <td>-</td>   
+                        <td>-</td>  
+                    </tr>
+                {% else %}
+                    {% for affectation in affectationsPassees %}
+                        <tr>
+                            <td>{{ affectation.poste.poste }}</td>                
+                            <td>{{ affectation.restaurant.nom }}</td>   
+                            <td>{{ affectation.dateDebut|date("d/m/Y") }}</td>   
+                            <td>{{ affectation.dateFin|date("d/m/Y") }}</td>  
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

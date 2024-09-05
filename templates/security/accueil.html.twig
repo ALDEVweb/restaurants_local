@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wacdo Back - gestion des restaurants{% endblock %}
+
+
+{% block header %}
+<div id="header" class="large-12 flex j-between a-center">
+    <div class="logo"><img src="{{ asset('images/logo.png') }}" alt="logo de Wakdo"></div>
+    <nav class="flex j-center gap16">
+        <a href="{{path('app_collaborateur_index')}}"><button class="back-button pad-button b-none round8">Collaborateurs</button></a>
+        <a href="{{path('app_restaurant_index')}}"><button class="back-button pad-button b-none round8">Restaurants</button></a>
+        <a href="{{path('app_affectation_index')}}"><button class="back-button pad-button b-none round8">Affectations</button></a>
+        <a href="{{path('app_fonction_index')}}"><button class="back-button pad-button b-none round8">Fonctions</button></a>
+    </nav>
+    <a href="{{path('app_logout')}}"><button class="back-two pad-button b-none round8">Déconnexion</button></a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div id="contain_index">
+    <h1 class="txt-center mt80">Bienvenu sur l'application de gestion de vos restaurant <b>Wacdo</b></h1>
+</div>
+{% endblock %}

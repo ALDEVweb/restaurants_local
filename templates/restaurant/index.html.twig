@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restaurant index{% endblock %}
+
+{% block header %}
+<div id="header" class="large-12 flex j-between a-center">
+    <div class="logo"><img src="{{ asset('images/logo.png') }}" alt="logo de Wakdo"></div>
+    <nav class="flex j-center gap16">
+        <a href="{{path('app_collaborateur_index')}}"><button class="back-button pad-button b-none round8">Collaborateurs</button></a>
+        <a href="{{path('app_affectation_index')}}"><button class="back-button pad-button b-none round8">Affectations</button></a>
+        <a href="{{path('app_fonction_index')}}"><button class="back-button pad-button b-none round8">Fonctions</button></a>
+    </nav>
+    <a href="{{path('app_logout')}}"><button class="back-two pad-button b-none round8">Déconnexion</button></a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div>
+    <h1 class="txt-center mb32">Liste des restaurants</h1>
+    <a href="{{ path('app_restaurant_new') }}">Create new</a>
+    <table class="table mt16">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Cp</th>
+                <th>Ville</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for restaurant in restaurants %}
+            <tr>
+                <td>{{ restaurant.nom }}</td>
+                <td>{{ restaurant.adresse }}</td>
+                <td>{{ restaurant.cp }}</td>
+                <td>{{ restaurant.ville }}</td>
+                <td>
+                    <a href="{{ path('app_restaurant_show', {'id': restaurant.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

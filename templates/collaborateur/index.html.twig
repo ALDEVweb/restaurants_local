@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des collaborateurs Wacdo{% endblock %}
+
+{% block header %}
+<div id="header" class="large-12 flex j-between a-center">
+    <div class="logo"><img src="{{ asset('images/logo.png') }}" alt="logo de Wakdo"></div>
+    <nav class="flex j-center gap16">
+        <a href="{{path('app_restaurant_index')}}"><button class="back-button pad-button b-none round8">Restaurants</button></a>
+        <a href="{{path('app_affectation_index')}}"><button class="back-button pad-button b-none round8">Affectations</button></a>
+        <a href="{{path('app_fonction_index')}}"><button class="back-button pad-button b-none round8">Fonctions</button></a>
+    </nav>
+    <a href="{{path('app_logout')}}"><button class="back-two pad-button b-none round8">Déconnexion</button></a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="large-12">
+    <h1 class="txt-center mb48">Liste des collaborateurs</h1>
+    <div class="flex j-between large-10 mrlauto">
+        <table class="table large-9">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Date_embauche</th>
+                    <th>Administrateur</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for collaborateur in collaborateurs %}
+                <tr>
+                    <td>{{ collaborateur.nom }}</td>
+                    <td>{{ collaborateur.prenom }}</td>
+                    <td>{{ collaborateur.email }}</td>
+                    <td>{{ collaborateur.dateEmbauche ? collaborateur.dateEmbauche|date('Y-m-d') : '' }}</td>
+                    <td>{{ collaborateur.administrateur ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('app_collaborateur_show', {'id': collaborateur.id}) }}">show</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="large-2">
+            <form class="large-12" action="{{path('app_collaborateur_index')}}" method="GET">
+                <p class="large-12 txt-center"><b>Recherche</b></p>
+                <div class="large-12 mt16">
+                    <input class="large-12" type="text" name="search" id="search">
+                </div>
+                <div class="large-12 flex j-center mt16">
+                    <input class="back-button pad-button round8 b-none" type="submit" value="Search">
+                </div>
+            </form>
+            <div class="flex j-center mt48 gap16">  
+                <a href="{{ path('app_collaborateur_index', {'noAffect': true}) }}"><button class="back-button pad-button round8 b-none">Non affectés</button></a>
+                <a href="{{ path('app_collaborateur_new') }}"><button class="back-button pad-button round8 b-none">Create new</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

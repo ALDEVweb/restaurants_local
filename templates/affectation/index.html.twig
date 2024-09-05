@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affectation index{% endblock %}
+
+{% block header %}
+<div id="header" class="large-12 flex j-between a-center">
+    <div class="logo"><img src="{{ asset('images/logo.png') }}" alt="logo de Wakdo"></div>
+    <nav class="flex j-center gap16">
+        <a href="{{path('app_collaborateur_index')}}"><button class="back-button pad-button b-none round8">Collaborateurs</button></a>
+        <a href="{{path('app_restaurant_index')}}"><button class="back-button pad-button b-none round8">Restaurants</button></a>
+        <a href="{{path('app_fonction_index')}}"><button class="back-button pad-button b-none round8">Fonctions</button></a>
+    </nav>
+    <a href="{{path('app_logout')}}"><button class="back-two pad-button b-none round8">Déconnexion</button></a>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="large-12">
+    <h1 class="txt-center mb48">Liste des affectations</h1>
+
+    <div class="flex j-between large-10 mrlauto">
+        <table class="table large-9">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Poste</th>
+                    <th>Restaurant</th>
+                    <th>Date_debut</th>
+                    <th>Date_fin</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if affectations is empty %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% else %}
+                {% for affectation in affectations %}
+                    <tr>
+                        <td class="txt-center">{{ affectation.collaborateur.prenom }} {{ affectation.collaborateur.nom }}</td>
+                        <td class="txt-center">{{ affectation.poste.poste }}</td>
+                        <td class="txt-center">{% if affectation.restaurant is not null %} {{affectation.restaurant.nom}} {% endif %}</td>
+                        <td class="txt-center">{{ affectation.dateDebut|date('Y-m-d') }}</td>
+                        <td class="txt-center">{{ affectation.dateFin ? affectation.dateFin|date('Y-m-d') : '-' }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <div class="large-2">
+            {{ form_start(form, {'method': 'GET'}) }}
+            <div class="large-12 flex gap8">
+                <p class="large-12 txt-center"><b>Filtres</b></p>
+                <div class="large-12">
+                    {{ form_row(form.collaborateur) }}
+                </div>
+                <div class="large-12">
+                    {{ form_row(form.poste) }}
+                </div>
+                <div class="large-12">
+                    {{ form_row(form.restaurant) }}
+                </div>
+                <div class="large-12 flex j-center mt16">
+                    <button class="back-button pad-button round8 b-none">Search</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div> 
+</div>
+{% endblock %}
